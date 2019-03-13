@@ -20,7 +20,7 @@
   "scripts": {
     "test": "jest",
     "compile": "tsc --build tsconfig.json",
-    "start": "parcel index.html",
+    "start": "parcel demo/index.html",
     "clear": "rm -r .cache dist out || exit 0",
     "t": "jest --watch"
   },
@@ -36,5 +36,8 @@
   "prettier": {
     "trailingComma": "all",
     "singleQuote": true
-  }
+  },
+  "browserslist": [
+    "last 1 Chrome version"
+  ]
 }

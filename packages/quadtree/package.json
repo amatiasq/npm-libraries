@@ -23,7 +23,7 @@
   "scripts": {
     "tsc": "tsc",
     "compile": "tsc --build tsconfig.json",
-    "start": "parcel index.html",
+    "start": "parcel demo/index.html",
     "clear": "rm -r .cache dist out || exit 0",
     "test": "jest",
     "t": "jest --watch"
@@ -44,5 +44,8 @@
   "dependencies": {
     "@amatiasq/geometry": "^0.1.0",
     "@amatiasq/util": "^0.1.0"
-  }
+  },
+  "browserslist": [
+    "last 1 Chrome version"
+  ]
 }

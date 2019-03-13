@@ -1,10 +1,10 @@
 import { Vector } from '@amatiasq/geometry';
 import { Rectangle, random } from '@amatiasq/geometry';
 import { getParam } from '@amatiasq/util';
-import Canvas from './src/Canvas';
-import IQuadEntity from './src/IQuadEntity';
-import QuadtreeCanvasRenderer from './src/QuadtreeCanvasRenderer';
-import Quadtree from './src/quadtree';
+import Canvas from '../src/Canvas';
+import IQuadEntity from '../src/IQuadEntity';
+import QuadtreeCanvasRenderer from '../src/QuadtreeCanvasRenderer';
+import Quadtree from '../src/quadtree';
 
 const maxEntities = getParam('maxEntities', 3);
 const maxDepth = getParam('maxDepth', 5);
