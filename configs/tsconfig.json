@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "experimentalDecorators": true,
+    "lib": ["dom", "es2018"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2018"
+  },
+  "exclude": ["../node_modules", "out"],
+  "forceConsistentCasingInFileNames": true,
+  "noImplicitReturns": true,
+  "strict": true,
+  "noUnusedLocals": true
+}

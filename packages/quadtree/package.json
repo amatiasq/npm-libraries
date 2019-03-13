@@ -1,0 +1,48 @@
+{
+  "name": "@amatiasq/quadtree",
+  "version": "0.1.0",
+  "description": "Quadtree data structure with recalculation & resize support",
+  "keywords": [
+    "quadtree"
+  ],
+  "author": "A. Matías Quezada <amatiasq@gmail.com>",
+  "homepage": "https://github.com/amatiasq/npm-libraries#readme",
+  "license": "MIT",
+  "main": "out/index.js",
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amatiasq/npm-libraries.git"
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "compile": "tsc --build tsconfig.json",
+    "start": "parcel index.html",
+    "clear": "rm -r .cache dist out || exit 0",
+    "test": "jest",
+    "t": "jest --watch"
+  },
+  "bugs": {
+    "url": "https://github.com/amatiasq/npm-libraries/issues"
+  },
+  "importSort": {
+    ".ts": {
+      "parser": "typescript",
+      "style": "module-compact"
+    }
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "singleQuote": true
+  },
+  "dependencies": {
+    "@amatiasq/geometry": "^0.1.0",
+    "@amatiasq/util": "^0.1.0"
+  }
+}

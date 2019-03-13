@@ -1,0 +1,40 @@
+{
+  "name": "@amatiasq/util",
+  "version": "0.1.0",
+  "description": "utils",
+  "author": "A. Matías Quezada <amatiasq@gmail.com>",
+  "homepage": "https://github.com/amatiasq/npm-libraries#readme",
+  "license": "MIT",
+  "main": "out/index.js",
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amatiasq/npm-libraries.git"
+  },
+  "scripts": {
+    "test": "jest",
+    "compile": "tsc --build tsconfig.json",
+    "start": "parcel index.html",
+    "clear": "rm -r .cache dist out || exit 0",
+    "t": "jest --watch"
+  },
+  "bugs": {
+    "url": "https://github.com/amatiasq/npm-libraries/issues"
+  },
+  "importSort": {
+    ".ts": {
+      "parser": "typescript",
+      "style": "module-compact"
+    }
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "singleQuote": true
+  }
+}
