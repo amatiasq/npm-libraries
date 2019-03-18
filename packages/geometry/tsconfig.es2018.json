@@ -1,0 +1,9 @@
+{
+  "extends": "../../configs/tsconfig.es2018.json",
+  "files": ["src/index.ts"],
+  "exclude": ["es2018"],
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "es2018"
+  }
+}

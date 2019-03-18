@@ -5,7 +5,7 @@
   "author": "A. Matías Quezada <amatiasq@gmail.com>",
   "homepage": "https://github.com/amatiasq/npm-libraries#readme",
   "license": "MIT",
-  "main": "out/index.js",
+  "main": "es5/index.js",
   "directories": {
     "src": "src",
     "test": "__tests__"
@@ -19,10 +19,12 @@
   },
   "scripts": {
     "test": "jest",
-    "compile": "tsc --build tsconfig.json",
+    "compile": "npm run compile:es5 && npm run compile:es2018",
     "start": "parcel demo/index.html",
-    "clear": "rm -r .cache dist out || exit 0",
-    "t": "jest --watch"
+    "clear": "rm -r .cache dist es5 es2018 || exit 0",
+    "t": "jest --watch",
+    "compile:es5": "tsc --build tsconfig.es5.json",
+    "compile:es2018": "tsc --build tsconfig.es2018.json"
   },
   "bugs": {
     "url": "https://github.com/amatiasq/npm-libraries/issues"
@@ -39,5 +41,7 @@
   },
   "browserslist": [
     "last 1 Chrome version"
-  ]
+  ],
+  "main.esnext": "es2018/index.js",
+  "esnext": "es2018/index.js"
 }

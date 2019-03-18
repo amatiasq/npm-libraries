@@ -1,0 +1,6 @@
+__tests__
+demo
+src
+jest.config.js
+tsconfig.es5.json
+tsconfig.es2018.json

@@ -1,0 +1,9 @@
+{
+  "extends": "../../configs/tsconfig.es5.json",
+  "files": ["src/index.ts"],
+  "exclude": ["es5"],
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "es5"
+  }
+}
