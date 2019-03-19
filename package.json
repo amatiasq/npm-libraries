@@ -6,11 +6,15 @@
     "compile": "lerna run clear && lerna link && lerna run compile",
     "test": "lerna run test",
     "geometry": "lerna exec --scope @amatiasq/geometry",
+    "geometry:commit": "tools/commit.sh geometry",
     "quadtree": "lerna exec --scope @amatiasq/quadtree",
+    "quadtree:commit": "tools/commit.sh quadtree",
     "quadtree:demo": "git rm docs/quadtree/demo*; tools/build-demo.sh quadtree && git add docs/quadtree/demo*",
+    "quadtree:start": "npm run compile && lerna run --scope @amatiasq/quadtree start",
     "util": "lerna exec --scope @amatiasq/util",
+    "util:commit": "tools/commit.sh util",
     "demo": "npm run quadtree:demo",
-    "start": "npm run compile && lerna run --scope @amatiasq/quadtree start"
+    "start": "npm run quadtree:start"
   },
   "devDependencies": {
     "@types/jest": "^24.0.9",
