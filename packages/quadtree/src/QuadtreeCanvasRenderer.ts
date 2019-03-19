@@ -62,11 +62,11 @@ export default class QuadtreeCanvasRenderer {
     }
 
     const { context } = this;
-    const { x, y, width, height } = entity;
+    const { left, top, width, height } = entity;
 
     context.save();
     context.fillStyle = color;
-    context.fillRect(x, y, width, height);
+    context.fillRect(left, top, width, height);
     context.restore();
   }
 }
