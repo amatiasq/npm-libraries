@@ -1,4 +1,4 @@
 import accessor from './accessor';
-import getParam from './getParam';
+import { getParam, getParams } from './getParam';
 
-export { accessor, getParam };
+export { accessor, getParam, getParams };
