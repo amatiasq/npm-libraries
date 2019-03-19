@@ -14,7 +14,7 @@
   "main": "es5/index.js",
   "directories": {
     "src": "src",
-    "test": "__tests__"
+    "test": "src"
   },
   "files": [
     "src"
