@@ -43,5 +43,6 @@
     "last 1 Chrome version"
   ],
   "main.esnext": "es2018/index.js",
-  "esnext": "es2018/index.js"
+  "esnext": "es2018/index.js",
+  "private": false
 }

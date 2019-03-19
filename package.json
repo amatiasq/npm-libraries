@@ -5,7 +5,10 @@
     "configs": "node tools/update-configs",
     "compile": "lerna run clear && lerna link && lerna run compile",
     "test": "lerna run test",
-    "quadtree": "npm run compile && lerna run --scope @amatiasq/quadtree start"
+    "geometry": "lerna exec --scope @amatiasq/geometry",
+    "quadtree": "lerna exec --scope @amatiasq/quadtree",
+    "util": "lerna exec --scope @amatiasq/util",
+    "start": "npm run compile && lerna run --scope @amatiasq/quadtree start"
   },
   "devDependencies": {
     "@types/jest": "^24.0.9",

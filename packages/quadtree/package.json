@@ -22,12 +22,13 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "compile": "npm run compile:es2018",
+    "compile": "npm run compile:es5 && npm run compile:es2018",
     "start": "parcel demo/index.html",
     "clear": "rm -r .cache dist es5 es2018 || exit 0",
     "test": "jest",
     "t": "jest --watch",
-    "compile:es2018": "tsc --build tsconfig.json"
+    "compile:es2018": "tsc --build tsconfig.json",
+    "compile:es5": "tsc --build tsconfig.es5.json"
   },
   "bugs": {
     "url": "https://github.com/amatiasq/npm-libraries/issues"
@@ -54,5 +55,6 @@
     "babel-preset-env": "^1.7.0"
   },
   "main.esnext": "es2018/index.js",
-  "esnext": "es2018/index.js"
+  "esnext": "es2018/index.js",
+  "private": false
 }
