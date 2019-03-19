@@ -56,7 +56,7 @@ export default class QuadtreeCanvasRenderer {
     context.restore();
   }
 
-  renderEntity(entity: IQuadEntity) {
+  renderEntity(entity: IQuadEntity, color = 'white') {
     if (!this.quadtree.includes(entity)) {
       throw new Error('Rendering entity not in the tree');
     }
@@ -65,7 +65,7 @@ export default class QuadtreeCanvasRenderer {
     const { x, y, width, height } = entity;
 
     context.save();
-    context.fillStyle = 'white';
+    context.fillStyle = color;
     context.fillRect(x, y, width, height);
     context.restore();
   }

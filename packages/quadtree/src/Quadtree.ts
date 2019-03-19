@@ -161,7 +161,7 @@ export default class Quadtree {
     return this.bounds.contains(entity);
   }
 
-  getAt(range: IRectangle) {
+  getAt(range: IRectangle): IQuadEntity[] {
     if (!this.bounds.collides(range)) {
       return [];
     }

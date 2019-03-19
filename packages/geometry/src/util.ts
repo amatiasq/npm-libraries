@@ -21,11 +21,12 @@ export function collides(
   self: IRectangle,
   { top, left, right, bottom }: IRectangle,
 ): boolean {
-  const isBottomInside = self.bottom > bottom && bottom > self.top;
-  const isTopInside = self.bottom > top && top > self.top;
-  const isRightInside = self.right > right && right > self.left;
-  const isLeftInside = self.right > left && left > self.left;
-  return (isBottomInside || isTopInside) && (isRightInside || isLeftInside);
+  return (
+    self.left < right &&
+    self.top < bottom &&
+    self.right > left &&
+    self.bottom > top
+  );
 }
 
 export function random(): number;
