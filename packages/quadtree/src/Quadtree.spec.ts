@@ -163,6 +163,93 @@ describe('Quadtree public API', () => {
       expect(sut.isDivided).toBe(false);
     });
   });
+
+  describe('Quadtree#resize', () => {
+    it('should update bounds', () => {
+      const sut = createQuad({ size: 100 });
+      const newSize = Rectangle.fromXY(0, 0, 140, 160);
+      sut.resize(newSize);
+      expect(sut.bounds.width).toBe(140);
+      expect(sut.bounds.height).toBe(160);
+    });
+
+    it('should kick off entities outside of range by resize after recalculation', () => {
+      const sut = createQuad({ size: 100 });
+      const entity = createEntity({ x: 90, y: 90 });
+      const newSize = createRectangle({ size: 50 });
+
+      sut.add(entity);
+      sut.resize(newSize);
+      const excluded = sut.recalculate();
+
+      expect(excluded.length).toBe(1);
+      expect(excluded[0]).toBe(entity);
+    });
+  });
+
+  describe('Quadtree#getAt', () => {
+    const range = createRectangle({ x: 40, y: 40, size: 20 });
+
+    function testRetrieveEntity({ x, y }: { x: number; y: number }) {
+      const sut = createQuad({ size: 100 });
+      const entity = createEntity({ x, y });
+
+      sut.add(entity);
+      const result = sut.getAt(range);
+
+      expect(result.length).toBe(1);
+      expect(result[0]).toBe(entity);
+    }
+
+    it('should return entities in the given range', () => {
+      testRetrieveEntity({ x: 50, y: 50 });
+    });
+
+    it('should not return entities outside the range', () => {
+      const sut = createQuad({ size: 100, maxEntities: 100 });
+      const range = createRectangle({ x: 40, y: 40, size: 20 });
+
+      sut.add(createEntity({ x: 10, y: 10 }));
+      sut.add(createEntity({ x: 10, y: 50 }));
+      sut.add(createEntity({ x: 10, y: 90 }));
+      sut.add(createEntity({ x: 50, y: 10 }));
+      sut.add(createEntity({ x: 50, y: 90 }));
+      sut.add(createEntity({ x: 90, y: 10 }));
+      sut.add(createEntity({ x: 90, y: 50 }));
+      sut.add(createEntity({ x: 90, y: 90 }));
+      const result = sut.getAt(range);
+
+      expect(result.length).toBe(0);
+    });
+
+    it('should return entities on the border of the range', () => {
+      testRetrieveEntity({ x: 40, y: 40 });
+    });
+
+    it('should work even with splitted quadtrees', () => {
+      const sut = createFilledQuad();
+      const extra = createEntity({ x: 40, y: 40 });
+
+      sut.add(extra);
+      const result = sut.getAt(range);
+
+      expect(sut.isDivided).toBe(true);
+      expect(result.length).toBe(1);
+      expect(result[0]).toBe(extra);
+    });
+
+    it('should work even with splitted quadtrees and over the division', () => {
+      const sut = createFilledQuad();
+      const extra = createEntity({ x: 50, y: 50 });
+
+      sut.add(extra);
+      const result = sut.getAt(range);
+
+      expect(sut.isDivided).toBe(true);
+      expect(result.length).toBe(1);
+      expect(result[0]).toBe(extra);
+    });
+  });
 });
 
 // Since this tool does optimization some behaviour is not visible from the public API
@@ -448,10 +535,22 @@ describe('Quadtree internals', () => {
   });
 
   describe('Quadtree#resize', () => {
-    it('should update bounds', () => {
-      // TODO:
+    it("should recalculate children's size", () => {
+      const sut = createFilledQuad({ size: 100 });
+      sut.add(createEntity());
+
+      let { nw, ne, sw, se } = getNodes(sut);
+      expect(nw.bounds.is(Rectangle.fromXY(0, 0, 50, 50))).toBe(true);
+      expect(ne.bounds.is(Rectangle.fromXY(50, 0, 50, 50))).toBe(true);
+      expect(sw.bounds.is(Rectangle.fromXY(0, 50, 50, 50))).toBe(true);
+      expect(se.bounds.is(Rectangle.fromXY(50, 50, 50, 50))).toBe(true);
+
+      sut.resize(createRectangle({ size: 160 }));
+      ({ nw, ne, sw, se } = getNodes(sut));
+      expect(nw.bounds.is(Rectangle.fromXY(0, 0, 80, 80))).toBe(true);
+      expect(ne.bounds.is(Rectangle.fromXY(80, 0, 80, 80))).toBe(true);
+      expect(sw.bounds.is(Rectangle.fromXY(0, 80, 80, 80))).toBe(true);
+      expect(se.bounds.is(Rectangle.fromXY(80, 80, 80, 80))).toBe(true);
     });
   });
-
-  // TODO: TDD #retrieve
 });

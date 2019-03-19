@@ -21,16 +21,30 @@ class Entity extends Rectangle implements IQuadEntity {
 }
 
 const canvas = new Canvas('canvas', { fillScreen: true });
-const { width, height } = canvas;
-const bounds = Rectangle.fromXY(0, 0, width, height);
-const quadtree = new Quadtree(bounds, maxEntities, maxDepth);
+const quadtree = new Quadtree(
+  Rectangle.fromXY(0, 0, canvas.width, canvas.height),
+  maxEntities,
+  maxDepth,
+);
 const renderer = new QuadtreeCanvasRenderer(quadtree, canvas.element);
 const entities: Entity[] = [];
 
+canvas.onResize = () => {
+  quadtree.resize(Rectangle.fromXY(0, 0, canvas.width, canvas.height));
+
+  const excluded = quadtree.recalculate() as Entity[];
+
+  for (const entry of excluded) {
+    entry.x = canvas.width / 2;
+    entry.y = canvas.height / 2;
+    quadtree.add(entry);
+  }
+};
+
 for (let i = 0; i < entitiesCount; i++) {
   const entity = Entity.fromXY(
-    random(entitySize, width - entitySize),
-    random(entitySize, height - entitySize),
+    random(entitySize, canvas.width - entitySize),
+    random(entitySize, canvas.height - entitySize),
     entitySize,
     entitySize,
   ) as Entity;
@@ -53,24 +67,7 @@ function update() {
     entity.update();
   }
 
-  const excluded = quadtree.recalculate() as Entity[];
-
-  for (const entry of excluded) {
-    while (!quadtree.contains(entry)) {
-      if (entry.left < 0 || entry.right > width) {
-        entry.velocity = Vector.of(-entry.velocity.x, entry.velocity.y);
-      }
-
-      if (entry.top < 0 || entry.bottom > height) {
-        entry.velocity = Vector.of(entry.velocity.x, -entry.velocity.y);
-      }
-
-      entry.update();
-    }
-
-    quadtree.add(entry);
-  }
-
+  recalculate();
   render();
   requestAnimationFrame(update);
 }
@@ -80,5 +77,29 @@ function render() {
 
   for (const entity of entities) {
     renderer.renderEntity(entity);
+  }
+}
+
+function recalculate() {
+  const excluded = quadtree.recalculate() as Entity[];
+
+  for (const entry of excluded) {
+    let i = 0;
+    while (!quadtree.contains(entry)) {
+      if (entry.left < 0 || entry.right > canvas.width) {
+        entry.velocity = Vector.of(-entry.velocity.x, entry.velocity.y);
+      }
+
+      if (entry.top < 0 || entry.bottom > canvas.height) {
+        entry.velocity = Vector.of(entry.velocity.x, -entry.velocity.y);
+      }
+
+      entry.update();
+      i++;
+
+      if (i > 100) debugger;
+    }
+
+    quadtree.add(entry);
   }
 }

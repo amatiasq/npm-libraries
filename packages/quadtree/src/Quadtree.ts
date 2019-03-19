@@ -1,4 +1,4 @@
-import { Rectangle } from '@amatiasq/geometry';
+import { IRectangle, Rectangle } from '@amatiasq/geometry';
 import IQuadEntity from './IQuadEntity';
 
 export default class Quadtree {
@@ -21,13 +21,17 @@ export default class Quadtree {
     );
   }
 
+  private get hasNodes() {
+    return this.nw && this.ne && this.sw && this.se;
+  }
+
   protected nw: Quadtree;
   protected ne: Quadtree;
   protected sw: Quadtree;
   protected se: Quadtree;
 
   constructor(
-    public readonly bounds: Rectangle,
+    public bounds: Rectangle,
     public readonly maxEntities: number,
     public readonly maxDepth: number,
     public readonly level: number = 0,
@@ -59,6 +63,17 @@ export default class Quadtree {
     );
   }
 
+  resize(bounds: Rectangle) {
+    this.bounds = bounds;
+    if (!this.hasNodes) return;
+
+    const b = bounds;
+    this.nw.resize(Rectangle.fromXY(b.left, b.top, b.halfWidth, b.halfHeight));
+    this.ne.resize(Rectangle.fromXY(b.x, b.top, b.halfWidth, b.halfHeight));
+    this.sw.resize(Rectangle.fromXY(b.left, b.y, b.halfWidth, b.halfHeight));
+    this.se.resize(Rectangle.fromXY(b.x, b.y, b.halfWidth, b.halfHeight));
+  }
+
   private createChild(x: number, y: number, width: number, height: number) {
     return new Quadtree(
       Rectangle.fromXY(x, y, width, height),
@@ -73,13 +88,24 @@ export default class Quadtree {
     if (this.isDivided) throw new Error('Already splitted');
 
     this._isDivided = true;
-    this.splitArea();
+    if (!this.hasNodes) this.splitArea();
     this.distribute();
   }
 
-  private splitArea() {
-    if (this.nw && this.ne && this.sw && this.se) return;
+  protected unsplit() {
+    if (!this.isDivided) throw new Error('Quadtree not splitted');
 
+    this.entities = [
+      ...this.entities,
+      ...this.nw.empty(),
+      ...this.ne.empty(),
+      ...this.sw.empty(),
+      ...this.se.empty(),
+    ];
+    this._isDivided = false;
+  }
+
+  private splitArea() {
     const b = this.bounds;
     this.nw = this.createChild(b.left, b.top, b.halfWidth, b.halfHeight);
     this.ne = this.createChild(b.x, b.top, b.halfWidth, b.halfHeight);
@@ -135,6 +161,23 @@ export default class Quadtree {
     return this.bounds.contains(entity);
   }
 
+  getAt(range: IRectangle) {
+    if (!this.bounds.collides(range)) {
+      return [];
+    }
+
+    const ownEntitites = this.entities.filter(entity => range.collides(entity));
+    if (!this.isDivided) return ownEntitites;
+
+    return [
+      ...ownEntitites,
+      ...this.nw.getAt(range),
+      ...this.ne.getAt(range),
+      ...this.sw.getAt(range),
+      ...this.se.getAt(range),
+    ];
+  }
+
   recalculate(): IQuadEntity[] {
     const toRecalculate = [];
     const excluded = [];
@@ -159,27 +202,28 @@ export default class Quadtree {
     }
 
     if (this.isDivided && this.entitiesCount <= this.maxEntities) {
-      this.entities = [
-        ...this.entities,
-        ...this.nw.empty(),
-        ...this.ne.empty(),
-        ...this.sw.empty(),
-        ...this.se.empty(),
-      ];
-      this._isDivided = false;
+      this.unsplit();
     }
 
     return excluded;
   }
 
   private empty() {
-    if (this.entities.length === 0) {
-      return this.entities;
+    const { entities } = this;
+
+    if (this.entities.length) {
+      this.entities = [];
     }
 
-    const { entities } = this;
-    this.entities = [];
-    return entities;
+    if (!this.isDivided) return entities;
+
+    return [
+      ...this.entities,
+      ...this.nw.empty(),
+      ...this.ne.empty(),
+      ...this.sw.empty(),
+      ...this.se.empty(),
+    ];
   }
 
   private getName(quadrant: Quadtree) {

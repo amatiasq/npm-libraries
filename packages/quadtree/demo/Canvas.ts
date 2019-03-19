@@ -1,6 +1,7 @@
 export default class Canvas {
   public readonly element: HTMLCanvasElement;
   public readonly context: CanvasRenderingContext2D;
+  public onResize: (self: Canvas) => void;
 
   get width() {
     return this.element.width;
@@ -35,16 +36,20 @@ export default class Canvas {
   }
 
   private fillScreenSize() {
-    console.log('resize');
+    let hasChanged = false;
 
     if (this.element.width !== window.innerWidth) {
-      console.log('width');
       this.element.width = window.innerWidth;
+      hasChanged = true;
     }
 
     if (this.element.height !== window.innerHeight) {
-      console.log('height');
       this.element.height = window.innerHeight;
+      hasChanged = true;
+    }
+
+    if (hasChanged && this.onResize) {
+      this.onResize(this);
     }
   }
 }
