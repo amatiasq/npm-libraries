@@ -1,30 +1,31 @@
 import { Vector } from '@amatiasq/geometry';
 import { Rectangle, random } from '@amatiasq/geometry';
-import { getParam } from '@amatiasq/util';
+import { getParams } from '@amatiasq/util';
 import IQuadEntity from '../src/IQuadEntity';
 import QuadtreeCanvasRenderer from '../src/QuadtreeCanvasRenderer';
 import Quadtree from '../src/quadtree';
 import Canvas from './Canvas';
 
-const maxEntities = getParam('maxEntities', 3);
-const maxDepth = getParam('maxDepth', 5);
-const entitiesCount = getParam('entitiesCount', 100);
-const entitySize = getParam('entitySize', 3);
-const hoverSize = getParam('hoverSize', 120);
-const maxSpeed = getParam('maxSpeed', 10);
+console.log(`Click to pause the simulation.\nResize for fun.`);
 
-console.log(`
-Click to pause the simulation.
-Resize for fun.
-
-Use URL parameters to configure. Avalable options and default values:
- - maxEntities=3
- - maxDepth=5
- - entitiesCount=100
- - entitySize=3
- - hoverSize=120
- - maxSpeed=10
-`);
+const {
+  maxEntities,
+  maxDepth,
+  entitiesCount,
+  entitySize,
+  hoverSize,
+  maxSpeed,
+} = getParams(
+  {
+    maxEntities: 3,
+    maxDepth: 5,
+    entitiesCount: 100,
+    entitySize: 3,
+    hoverSize: 120,
+    maxSpeed: 10,
+  },
+  { log: true },
+);
 
 class Entity extends Rectangle implements IQuadEntity {
   velocity = Vector.fromRandom(-maxSpeed, maxSpeed);
