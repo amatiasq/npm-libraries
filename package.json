@@ -7,7 +7,9 @@
     "test": "lerna run test",
     "geometry": "lerna exec --scope @amatiasq/geometry",
     "quadtree": "lerna exec --scope @amatiasq/quadtree",
+    "quadtree:demo": "npm run demo -- quadtree",
     "util": "lerna exec --scope @amatiasq/util",
+    "demo": "tools/build-demo.sh",
     "start": "npm run compile && lerna run --scope @amatiasq/quadtree start"
   },
   "devDependencies": {
