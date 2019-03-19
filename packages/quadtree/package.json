@@ -22,13 +22,12 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "compile": "npm run compile:es5 && npm run compile:es2018",
+    "compile": "npm run compile:es2018",
     "start": "parcel demo/index.html",
     "clear": "rm -r .cache dist es5 es2018 || exit 0",
     "test": "jest",
     "t": "jest --watch",
-    "compile:es5": "tsc --build tsconfig.es5.json",
-    "compile:es2018": "tsc --build tsconfig.es2018.json"
+    "compile:es2018": "tsc --build tsconfig.json"
   },
   "bugs": {
     "url": "https://github.com/amatiasq/npm-libraries/issues"

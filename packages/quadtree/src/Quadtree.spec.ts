@@ -1,8 +1,8 @@
-import './toBeSame';
+import '../test-helpers/toBeSame';
 
 import { Rectangle } from '@amatiasq/geometry';
-import IQuadEntity from '../src/IQuadEntity';
-import Quadtree, { QuadrantName } from '../src/quadtree';
+import IQuadEntity from './IQuadEntity';
+import Quadtree, { QuadrantName } from './quadtree';
 
 const QUADRANTS = ['nw', 'ne', 'sw', 'se'];
 const DEFAULT_MAX_ENTITIES = 2;

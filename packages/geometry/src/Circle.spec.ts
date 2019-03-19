@@ -1,5 +1,5 @@
-import Circle from '../src/Circle';
-import initializer from './initializer';
+import Circle from './Circle';
+import initializer from '../test-helpers/initializer';
 
 describe('Circle representation', () => {
   // Is private

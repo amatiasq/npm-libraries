@@ -1,7 +1,7 @@
-import Rectangle, { IRectangle } from '../src/Rectangle';
+import Rectangle, { IRectangle } from './Rectangle';
 
-import Vector from '../src/Vector';
-import initializer from './initializer';
+import Vector from './Vector';
+import initializer from '../test-helpers/initializer';
 
 describe('Rectangle representation', () => {
   // Is private

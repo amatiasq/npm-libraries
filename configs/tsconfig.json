@@ -3,11 +3,11 @@
     "declaration": true,
     "experimentalDecorators": true,
     "lib": ["dom", "es2018"],
-    "module": "commonjs",
+    "module": "es2015",
     "moduleResolution": "node",
-    "target": "es5"
+    "target": "es2018"
   },
-  "exclude": ["../node_modules", "out"],
+  "exclude": ["../node_modules"],
   "forceConsistentCasingInFileNames": true,
   "noImplicitReturns": true,
   "strict": true,

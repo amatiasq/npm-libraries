@@ -1,5 +1,5 @@
-import SquaredCircle from '../src/SquaredCircle';
-import initializer from './initializer';
+import SquaredCircle from './SquaredCircle';
+import initializer from '../test-helpers/initializer';
 import { testCollisions } from './Rectangle.spec';
 
 describe('SquaredCircle representation', () => {

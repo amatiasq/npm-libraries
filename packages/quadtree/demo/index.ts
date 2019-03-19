@@ -1,7 +1,7 @@
 import { Vector } from '@amatiasq/geometry';
 import { Rectangle, random } from '@amatiasq/geometry';
 import { getParam } from '@amatiasq/util';
-import Canvas from '../src/Canvas';
+import Canvas from './Canvas';
 import IQuadEntity from '../src/IQuadEntity';
 import QuadtreeCanvasRenderer from '../src/QuadtreeCanvasRenderer';
 import Quadtree from '../src/quadtree';
@@ -15,6 +15,7 @@ class Entity extends Rectangle implements IQuadEntity {
   velocity = Vector.fromRandom(-10, 10);
 
   update() {
+    console.log(`UPDATE ${this.x} ${this.y}`);
     this.x += this.velocity.x;
     this.y += this.velocity.y;
   }
@@ -25,7 +26,7 @@ const { width, height } = canvas;
 const bounds = Rectangle.fromXY(0, 0, width, height);
 const quadtree = new Quadtree(bounds, maxEntities, maxDepth);
 const renderer = new QuadtreeCanvasRenderer(quadtree, canvas.element);
-const entities = new Set();
+const entities: Entity[] = [];
 
 for (let i = 0; i < entitiesCount; i++) {
   const entity = Entity.fromXY(
@@ -33,10 +34,10 @@ for (let i = 0; i < entitiesCount; i++) {
     random(entitySize, height - entitySize),
     entitySize,
     entitySize,
-  );
+  ) as Entity;
 
   quadtree.add(entity);
-  entities.add(entity);
+  entities.push(entity);
 }
 
 render();

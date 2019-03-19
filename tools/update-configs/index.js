@@ -3,6 +3,8 @@ const {
   readdirSync,
   writeFileSync,
   copyFileSync,
+  existsSync,
+  unlinkSync,
 } = require('fs');
 const { join } = require('path');
 
@@ -13,13 +15,15 @@ const files = [
   '.npmignore',
   'jest.config.js',
   'tsconfig.es5.json',
-  'tsconfig.es2018.json',
+  'tsconfig.json',
 ];
 
 for (const entry of packages) {
   const dir = join(packagesDir, entry);
   const pkgPath = join(dir, 'package.json');
   const pkg = json(pkgPath);
+
+  // remove('tsconfig.es2018.json');
 
   for (const file of files) {
     copyFileSync(getTemplateFilename(file), join(dir, file));
@@ -34,6 +38,11 @@ for (const entry of packages) {
       ...(basePkg.scripts || {}),
     },
   });
+
+  function remove(filename) {
+    const path = join(dir, filename);
+    if (existsSync(path)) unlinkSync(path);
+  }
 }
 
 function getTemplateFilename(name) {

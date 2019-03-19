@@ -1,5 +1,5 @@
 {
-  "extends": "../../configs/tsconfig.es2018.json",
+  "extends": "../../configs/tsconfig.json",
   "files": ["src/index.ts"],
   "exclude": ["es2018"],
   "compilerOptions": {

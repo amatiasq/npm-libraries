@@ -5,10 +5,11 @@
     "configs": "node tools/update-configs",
     "compile": "lerna run clear && lerna link && lerna run compile",
     "test": "lerna run test",
-    "quadtree:start": "npm run compile && lerna run --scope @amatiasq/quadtree start"
+    "quadtree": "npm run compile && lerna run --scope @amatiasq/quadtree start"
   },
   "devDependencies": {
     "@types/jest": "^24.0.9",
+    "cz-lerna-changelog": "^2.0.2",
     "jest": "^24.3.1",
     "lerna": "^3.13.1",
     "parcel": "^1.12.1",
