@@ -15,6 +15,7 @@ const maxSpeed = getParam('maxSpeed', 10);
 
 console.log(`
 Click to pause the simulation.
+Resize for fun.
 
 Use URL parameters to configure. Avalable options and default values:
  - maxEntities=3
