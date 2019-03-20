@@ -9,7 +9,7 @@
     "geometry:commit": "tools/commit.sh geometry",
     "quadtree": "lerna exec --scope @amatiasq/quadtree",
     "quadtree:commit": "tools/commit.sh quadtree",
-    "quadtree:demo": "git rm docs/quadtree/demo*; tools/build-demo.sh quadtree && git add docs/quadtree/demo*",
+    "quadtree:demo": "tools/update-demo.sh quadtree",
     "quadtree:start": "npm run compile && lerna run --scope @amatiasq/quadtree start",
     "util": "lerna exec --scope @amatiasq/util",
     "util:commit": "tools/commit.sh util",

@@ -1,7 +1,15 @@
 #!/bin/bash
 
+pkg="$1"
+
+if [ -z "$pkg" ]
+then
+  echo "Package name expected as argument"
+  exit 1
+fi
+
 npx parcel build \
   --public-url . \
   --no-cache \
-  -d "docs/$1" \
-  "packages/$1/demo/index.html"
+  -d "docs/$pkg" \
+  "packages/$pkg/demo/index.html"
