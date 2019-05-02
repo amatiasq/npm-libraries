@@ -1,6 +1,7 @@
 import { accessor } from '@amatiasq/util';
+import IRectangleLike from './IRectangleLike';
 import { IVector } from './Vector';
-import { collides, contains, containsPoint } from './util';
+import { ContactOptions, collides, contains, containsPoint } from './util';
 
 export default class Rectangle implements IRectangle, IVector {
   static fromCenter(
@@ -43,16 +44,19 @@ export default class Rectangle implements IRectangle, IVector {
     );
   }
 
-  containsPoint(target: IVector): boolean {
-    return containsPoint(this, target);
+  containsPoint(
+    target: IVector,
+    options = ContactOptions.INCLUDE_BORDERS,
+  ): boolean {
+    return containsPoint(this, target, options);
   }
 
-  contains(target: IRectangle) {
-    return contains(this, target);
+  contains(target: IRectangleLike, options = ContactOptions.INCLUDE_BORDERS) {
+    return contains(this, target, options);
   }
 
-  collides(target: IRectangle) {
-    return collides(this, target);
+  collides(target: IRectangleLike, options = ContactOptions.INCLUDE_BORDERS) {
+    return collides(this, target, options);
   }
 
   toString() {
@@ -61,7 +65,7 @@ export default class Rectangle implements IRectangle, IVector {
   }
 }
 
-export default interface Rectangle {
+export default interface Rectangle extends IRectangleLike {
   x: number;
   y: number;
   width: number;
@@ -102,8 +106,8 @@ export interface IRectangle extends IVector {
   bottom: number;
 
   containsPoint(point: IVector): boolean;
-  contains(target: IRectangle): boolean;
-  collides(target: IRectangle): boolean;
+  contains(target: IRectangleLike, options?: ContactOptions): boolean;
+  collides(target: IRectangleLike, options?: ContactOptions): boolean;
 }
 
 interface IRectangleInternal {

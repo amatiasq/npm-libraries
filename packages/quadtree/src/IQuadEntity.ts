@@ -1,3 +1,6 @@
-import { IRectangle } from '@amatiasq/geometry';
-
-export default interface IQuadEntity extends IRectangle {}
+export default interface IQuadEntity {
+  top: number;
+  left: number;
+  right: number;
+  bottom: number;
+}

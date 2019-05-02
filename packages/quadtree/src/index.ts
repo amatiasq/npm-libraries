@@ -1,3 +1,3 @@
-import Quadtree from './Quadtree';
+import Quadnode from './Quadnode';
 
-export { Quadtree };
+export { Quadnode };

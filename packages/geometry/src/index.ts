@@ -1,6 +1,16 @@
+import IRectangleLike from './IRectangleLike';
 import Rectangle, { IRectangle } from './Rectangle';
 import SquaredCircle, { ISquaredCircle } from './SquaredCircle';
 import Vector from './Vector';
-import { random } from './util';
+import { ContactOptions, random } from './util';
 
-export { IRectangle, Rectangle, ISquaredCircle, SquaredCircle, Vector, random };
+export {
+  ContactOptions,
+  IRectangle,
+  IRectangleLike,
+  Rectangle,
+  ISquaredCircle,
+  SquaredCircle,
+  Vector,
+  random,
+};

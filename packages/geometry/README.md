@@ -1,11 +1,11 @@
-# `geometry`
+# `@amatiasq/geometry`
 
 > TODO: description
 
 ## Usage
 
 ```
-const geometry = require('geometry');
+const geometry = require('@amatiasq/geometry');
 
 // TODO: DEMONSTRATE API
 ```

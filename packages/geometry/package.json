@@ -54,5 +54,9 @@
   ],
   "main.esnext": "es2018/index.js",
   "esnext": "es2018/index.js",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "semantic-release": "^15.13.3",
+    "semantic-release-monorepo": "^6.1.1"
+  }
 }

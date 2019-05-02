@@ -1,29 +1,65 @@
+import IRectangleLike from './IRectangleLike';
 import { IRectangle } from './Rectangle';
 import { IVector } from './Vector';
 
-export function containsPoint(self: IRectangle, { x, y }: IVector): boolean {
-  return y > self.top && y < self.bottom && x > self.left && x < self.right;
+export enum ContactOptions {
+  NONE = 0,
+  INCLUDE_BORDERS = 0x1,
+}
+
+export function containsPoint(
+  self: IRectangle,
+  { x, y }: IVector,
+  includeBorders: number,
+): boolean {
+  if (includeBorders & ContactOptions.INCLUDE_BORDERS) {
+    return (
+      y >= self.top && x >= self.left && x <= self.right && y <= self.bottom
+    );
+  }
+
+  return y > self.top && x > self.left && x < self.right && y < self.bottom;
 }
 
 export function contains(
   self: IRectangle,
-  { top, left, right, bottom }: IRectangle,
+  { top, left, right, bottom }: IRectangleLike,
+  includeBorders: number,
 ): boolean {
+  if (includeBorders & ContactOptions.INCLUDE_BORDERS) {
+    return (
+      top >= self.top &&
+      left >= self.left &&
+      right <= self.right &&
+      bottom <= self.bottom
+    );
+  }
+
   return (
-    top >= self.top &&
-    bottom <= self.bottom &&
-    left >= self.left &&
-    right <= self.right
+    top > self.top &&
+    left > self.left &&
+    right < self.right &&
+    bottom < self.bottom
   );
 }
 
 export function collides(
   self: IRectangle,
-  { top, left, right, bottom }: IRectangle,
+  { top, left, right, bottom }: IRectangleLike,
+  includeBorders: number,
 ): boolean {
+  if (includeBorders & ContactOptions.INCLUDE_BORDERS) {
+    return (
+      self.top <= bottom &&
+      self.left <= right &&
+      self.right >= left &&
+      self.bottom >= top
+    );
+  }
+
   return (
-    self.left < right &&
     self.top < bottom &&
+    self.left < right &&
     self.right > left &&
     self.bottom > top
   );

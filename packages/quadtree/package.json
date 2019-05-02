@@ -52,7 +52,9 @@
   ],
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0"
+    "babel-preset-env": "^1.7.0",
+    "semantic-release": "^15.13.3",
+    "semantic-release-monorepo": "^6.1.1"
   },
   "main.esnext": "es2018/index.js",
   "esnext": "es2018/index.js",

@@ -2,7 +2,7 @@ import { accessor } from '@amatiasq/util';
 import { ICircle } from './Circle';
 import { IRectangle } from './Rectangle';
 import { IVector } from './Vector';
-import { collides, contains, containsPoint } from './util';
+import { ContactOptions, collides, contains, containsPoint } from './util';
 
 export default class SquaredCircle
   implements ISquaredCircle, ICircle, IRectangle, IVector {
@@ -24,20 +24,37 @@ export default class SquaredCircle
     );
   }
 
-  containsPoint(target: IVector): boolean {
-    return containsPoint(this, target);
+  containsPoint(
+    target: IVector,
+    options = ContactOptions.INCLUDE_BORDERS,
+  ): boolean {
+    return containsPoint(this, target, options);
   }
 
-  contains(target: IRectangle) {
-    return contains(this, target);
+  contains(target: ISquaredCircle, options = ContactOptions.INCLUDE_BORDERS) {
+    if (!contains(this, target, options)) return false;
+
+    const distance = Math.hypot(this.x - target.x, this.y - target.y);
+    const containmentDistance = Math.abs(this.radius - target.radius);
+
+    return options & ContactOptions.INCLUDE_BORDERS
+      ? distance <= containmentDistance
+      : distance < containmentDistance;
   }
 
-  collides(target: IRectangle) {
-    return collides(this, target);
+  collides(target: ISquaredCircle, options = ContactOptions.INCLUDE_BORDERS) {
+    if (!collides(this, target, options)) return false;
+
+    const distance = Math.hypot(this.x - target.x, this.y - target.y);
+    const collisionDistance = this.radius + target.radius;
+
+    return options & ContactOptions.INCLUDE_BORDERS
+      ? distance <= collisionDistance
+      : distance < collisionDistance;
   }
 
   toString() {
-    return `[${this.top},${this.left}][${this.bottom},${this.right}]`;
+    return `[${this.x},${this.y}][${this.radius}]`;
   }
 }
 

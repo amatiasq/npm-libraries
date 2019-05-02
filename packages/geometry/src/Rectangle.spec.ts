@@ -1,7 +1,7 @@
-import Rectangle, { IRectangle } from './Rectangle';
-
-import Vector from './Vector';
 import initializer from '../test-helpers/initializer';
+import Rectangle, { IRectangle } from './Rectangle';
+import Vector from './Vector';
+import { ContactOptions } from './util';
 
 describe('Rectangle representation', () => {
   // Is private
@@ -226,8 +226,23 @@ export function testCollisions(create: () => IRectangle) {
       Rectangle.fromCenter(7, -7, 2, 2),
       Rectangle.fromCenter(7, 7, 2, 2),
     ]) {
-      it(`should return false if target is touching the border from the outside (${rect})`, () => {
+      it(`should return true if target is touching the border from the outside (${rect})`, () => {
         expect(sut.collides(rect)).toBe(false);
+      });
+    }
+
+    for (const rect of [
+      Rectangle.fromCenter(7, 0, 2, 2),
+      Rectangle.fromCenter(0, 7, 2, 2),
+      Rectangle.fromCenter(-7, 0, 2, 2),
+      Rectangle.fromCenter(0, -7, 2, 2),
+      Rectangle.fromCenter(-7, -7, 2, 2),
+      Rectangle.fromCenter(-7, 7, 2, 2),
+      Rectangle.fromCenter(7, -7, 2, 2),
+      Rectangle.fromCenter(7, 7, 2, 2),
+    ]) {
+      it(`should return false if target is touching the border from the outside and NONE is passed as option (${rect})`, () => {
+        expect(sut.collides(rect, ContactOptions.NONE)).toBe(false);
       });
     }
 
